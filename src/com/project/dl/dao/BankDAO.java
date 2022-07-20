@@ -21,8 +21,7 @@ public class BankDAO implements BankDAOInterface
 		{
 			if(name=="" || pin==0)
 			{
-				System.out.println("All Fields Required");
-				return false;
+				throw new DAOException("All fields required");
 			}
 			
 			Statement st=con.createStatement();
@@ -32,13 +31,10 @@ public class BankDAO implements BankDAOInterface
 				System.out.println(name+", Now you can Login..!");
 				return true;
 			}
-		}catch (SQLIntegrityConstraintViolationException e) 
-		{
-            System.out.println("Username Not Available!");
-        }
+		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 		return false;
@@ -53,8 +49,7 @@ public class BankDAO implements BankDAOInterface
 		Integer pin=bankDTO.getPin();
 		if(name=="" || pin==0)
 		{
-			System.out.println("ALl fields Required");
-			return false;
+			throw new DAOException("All fields required");
 		}
 		sql="select * from bank_details where name='"+name+"' and pin="+pin;
 		PreparedStatement st=con.prepareStatement(sql);
@@ -76,20 +71,18 @@ public class BankDAO implements BankDAOInterface
 				System.out.println("4. logout");
 				System.out.println("Enter your choice : ");
 				cho=sc.nextInt();
+				BankDAO bankDAO=new BankDAO();
 				if(cho==1)
 				{
-					BankDAO bankDAO=new BankDAO();
 					bankDAO.getBalance(snt);
 				}
 				else if(cho==2)
 				{ 	
-					BankDAO bankDAO=new BankDAO();
 					bankDAO.withdrawAmount(snt);
 					
 				}
 				else if(cho==3)
 				{
-					BankDAO bankDAO=new BankDAO();
 					bankDAO.depositAmount(snt);
 				}
 				else
@@ -110,7 +103,7 @@ public class BankDAO implements BankDAOInterface
 		
 		}catch(Exception e)
 		{
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 		return false;
@@ -153,8 +146,7 @@ public class BankDAO implements BankDAOInterface
 				int withdraw=sc.nextInt();
 				if(Integer.parseInt(rs.getString("balance"))<withdraw || withdraw<=0)
 				{
-					System.out.println("Invalid amount, Insufficient Balance");
-					return;
+					throw new DAOException("Invaid amount, Insufficent balance");
 				}
 				int finalAmount=Integer.parseInt(rs.getString("balance"))-withdraw;
 				Statement sta=con.createStatement();
@@ -171,7 +163,8 @@ public class BankDAO implements BankDAOInterface
 			
 		}catch(Exception e)
 		{
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+			
 		}
 	}
 
@@ -192,8 +185,7 @@ public class BankDAO implements BankDAOInterface
 				int deposit=sc.nextInt();
 				if(deposit<=0)
 				{
-					System.out.println("Invalid amount");
-					return;
+					throw new DAOException("Invalid amount");
 				}
 				int finalAmount=Integer.parseInt(rs.getString("balance"))+deposit;
 				Statement sta=con.createStatement();
@@ -210,7 +202,7 @@ public class BankDAO implements BankDAOInterface
 			
 		}catch(Exception e)
 		{
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 	}
