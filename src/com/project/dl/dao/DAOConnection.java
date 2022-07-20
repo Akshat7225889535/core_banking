@@ -7,14 +7,15 @@ public class DAOConnection {
 		try {
 			
 			
-			String mysqlJDBCDriver="com.mysql.cj.jdbc.Driver"; 
-			String url="jdbc:mysql://localhost:3306/core_banking?autoReconnect=true&useSSL=false"; 
+			String mysqlJDBCDriver="oracle.jdbc.driver.OracleDriver"; 
+			//String url="jdbc:mysql://localhost:3306/core_banking?autoReconnect=true&useSSL=false"; 
 		//Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysys?autoReconnect=true&useSSL=false","root","pass")
-			String user = "root";	
-			String pass = "APer2022@%tenT"; 
+			String url="jdbc:oracle:thin:@localhost:1521:xe";
+			String user = "core_banking";	
+			String pass = "Akshat1999**"; 
 			Class.forName(mysqlJDBCDriver);
 			con =DriverManager.getConnection(url,user,pass);
-			
+			System.out.println("Connection established");
 			
 		}
 		catch (Exception e) {

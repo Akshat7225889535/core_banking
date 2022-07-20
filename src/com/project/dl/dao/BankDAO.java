@@ -15,7 +15,7 @@ public class BankDAO implements BankDAOInterface
 	@Override
 	public boolean createAccount(BankDTO bankDTO) throws DAOException 
 	{
-		String name=bankDTO.getName();
+		String name=bankDTO.getName().toUpperCase();
 		Integer pin=bankDTO.getPin();
 		try
 		{
@@ -26,7 +26,7 @@ public class BankDAO implements BankDAOInterface
 			}
 			
 			Statement st=con.createStatement();
-			sql="insert into bank_details(name,balance,pin) values ('"+name+"',1000,"+pin+")";
+			sql="insert into bank_details(acc_number,name,balance,pin) values (acc_number.nextval,'"+name+"',1000,"+pin+")";
 			if(st.executeUpdate(sql)==1)
 			{
 				System.out.println(name+", Now you can Login..!");
@@ -49,7 +49,7 @@ public class BankDAO implements BankDAOInterface
 	{
 		try
 		{
-		String name=bankDTO.getName();
+		String name=bankDTO.getName().toUpperCase();
 		Integer pin=bankDTO.getPin();
 		if(name=="" || pin==0)
 		{
