@@ -17,7 +17,7 @@ public class BankAddTestCase {
 			System.out.println("<---Welcome to the Bank--->");
 			System.out.println("1. Create Account");
 			System.out.println("2. Login Account");
-			System.out.println("3. Exit");
+			System.out.println("3. Exit..");
 			try
 			{
 				System.out.println("Enter your choice : ");
